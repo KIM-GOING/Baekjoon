@@ -54,7 +54,7 @@ int main() {
 	double all_level = 0.0;
 	for (int i = 0; i < 20; i++) {
 		if (Ascore[i] == "P")
-			break;
+			continue;
 		all_level += level[i];
 	}
 
