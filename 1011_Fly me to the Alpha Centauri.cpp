@@ -9,14 +9,21 @@ int main() {
 		cin >> x >> y;
 		int distance = y - x;
 
-		int sum = 0;
 		int count = 1;
-		for (int i = 1; i <= distance; i += 2) {
-			for (int j = 1; j <= 2; j++) {
-				sum = count;
-				count++;
+		int sum = distance;
+		int min = 0;
+		while (sum > 0) {
+			for (int i = 0; i < 2; i++) {
+				if (sum <= 0)
+					break;
+				sum = sum - count;
+				min++;
 			}
+			if (sum <= 0)
+				break;
+			count++;
 		}
+		cout << min << '\n';
 	}
 
 	return 0;
