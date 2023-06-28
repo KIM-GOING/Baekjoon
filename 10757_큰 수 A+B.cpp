@@ -1,61 +1,55 @@
-#include <cstdio>
 #include <iostream>
 #include <vector>
 #include <string>
 using namespace std;
 
 int main() {
-	string n1, n2;
-	cin >> n1;
-	cin >> n2;
+	string n1;
+	string n2;
+	cin >> n1 >> n2;
 
-	vector<char> num1;
-	vector<char> num2;
-	for(int i = 0; i < n1.length(); i++)
-		num1.insert(num1.begin(), n1[i]);
-	for (int i = 0; i < n2.length(); i++)
-		num2.insert(num2.begin(), n2[i]);
+	vector<int> num1;
+	for (int i = 0; i < n1.size(); i++) {
+		num1.push_back(n1[i]);
+	}
+	vector<int> num2;
+	for (int i = 0; i < n2.size(); i++) {
+		num1.push_back(n2[i]);
+	}
 
-	int size = 0;
-	if (num1.size() >= num2.size())
-		size = num1.size();
-	else
-		size = num2.size();
+	vector<int> sum;
+	string max;
+	string min;
+	if (n1.size() >= n2.size()) {
+		max = n1;
+		min = n2;
+	}
+	else {
+		max = n2;
+		min = n1;
+	}
 
-	int temp = 0;
-	int p1, p2, number = 0;
-	vector<int> finalNum;
-	for (int i = 0; i < size; i++) {
-		if (num1.size() < size) {
-			p1 = num2[i] - 48;
-			number = p1 + temp;
-			if (number > 9)
-				temp = 1;
-			finalNum.insert(finalNum.begin(), number % 10);
-		}
-		else if (num2.size() < size) {
-			p1 = num1[i] - 48;
-			number = p1 + temp;
-			if (number > 9)
-				temp = 1;
-			finalNum.insert(finalNum.begin(), number % 10);
+	int remain = 0;
+	int share = 0;
+	for (int i = 0; i < max.size(); i++) {
+		if (min.size() < i + 1) {
+			remain = (max.back() + min.back()) % 10;
+			sum.push_back(remain + share);
+			share = (max.back() + min.back()) / 10;
+			max.pop_back();
+			min.pop_back();
 		}
 		else {
-			p1 = num1[i] - 48;
-			p2 = num2[i] - 48;
-			number = p1 + p2 + temp;
-			finalNum.insert(finalNum.begin(), number % 10);
-			if (number > 9)
-				temp = 1;
-			else
-				temp = 0;
+			remain = max.back() % 10;
+			sum.push_back(remain + share);
+			share = 0;
+			max.pop_back();
 		}
 	}
-	if (temp == 1)
-		finalNum.insert(finalNum.begin(), temp);
 
-	for (int i = 0; i < finalNum.size(); i++)
-		cout << finalNum[i];
+	for (int i = 0; i < sum.size(); i++) {
+		cout << sum[sum.size() - 1 - i];
+	}
 
 	return 0;
 }
