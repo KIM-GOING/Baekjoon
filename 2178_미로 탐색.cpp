@@ -3,11 +3,10 @@
 #include <queue>
 using namespace std;
 
+//큐에 넣을 위치 구조체 정의
 struct Position {
 	int x = 0;
 	int y = 0;
-	int visit = 1;
-	int count = 0;
 };
 
 int main() {
@@ -16,10 +15,12 @@ int main() {
 
 	int n, m;
 	cin >> n >> m;
-	Position** maze = new Position *[n];
-	for (int i = 0; i < n; i++)
-		maze[i] = new Position[m];
+	Position maze[100][100];
+	int visit[100][100];
+	int count[100][100] = {0};
 
+
+	//미로 입력
 	for (int i = 0; i < n; i++) {
 		string row;
 		cin >> row;
@@ -27,50 +28,50 @@ int main() {
 			Position p;
 			p.x = i;
 			p.y = j;
-			p.visit = (int)row[j] - 48;
 			maze[i][j] = p;
+			visit[i][j] = (int)row[j] - 48;
 		}
 	}
 
-	Position exit;
-	exit.x = n - 1;
-	exit.y = m - 1;
 	queue<Position> arr;
-	maze[0][0].count = 1;
 	Position now = maze[0][0];
+
+	visit[0][0] = 0;
+	count[0][0] = 1;
 	arr.push(now);
-	now.visit = 0;
-	while (arr.front().x != exit.x || arr.front().y != exit.y) {
-		if (now.x - 1 >= 0)
-			if (maze[now.x - 1][now.y].visit == 1) {
-				maze[now.x - 1][now.y].count = now.count + 1;
-				arr.push(maze[now.x - 1][now.y]);
+	while (now.x != n - 1 || now.y != m - 1) {
+		int x = now.x;
+		int y = now.y;
+
+		if(x - 1 >= 0)
+			if (visit[x - 1][y] == 1) {
+				visit[x - 1][y] = 0;
+				arr.push(maze[x - 1][y]);
+				count[x - 1][y] = count[x][y] + 1;
 			}
-		if (now.y - 1 >= 0)
-			if (maze[now.x][now.y - 1].visit == 1) {
-				maze[now.x][now.y - 1].count = now.count + 1;
-				arr.push(maze[now.x][now.y - 1]);
+		if(x + 1 < n)
+			if (visit[x + 1][y] == 1) {
+				visit[x + 1][y] = 0;
+				arr.push(maze[x + 1][y]);
+				count[x + 1][y] = count[x][y] + 1;
 			}
-		if (now.x + 1 < n)
-			if (maze[now.x + 1][now.y].visit == 1) {
-				maze[now.x + 1][now.y].count = now.count + 1;
-				arr.push(maze[now.x + 1][now.y]);
+		if(y - 1 >= 0)
+			if (visit[x][y - 1] == 1) {
+				visit[x][y - 1] = 0;
+				arr.push(maze[x][y - 1]);
+				count[x][y - 1] = count[x][y] + 1;
 			}
-		if (now.y + 1 < m)
-			if (maze[now.x][now.y + 1].visit == 1) {
-				maze[now.x][now.y + 1].count = now.count + 1;
-				arr.push(maze[now.x][now.y + 1]);
+		if (y + 1 < m)
+			if (visit[x][y + 1] == 1) {
+				visit[x][y + 1] = 0;
+				arr.push(maze[x][y + 1]);
+				count[x][y + 1] = count[x][y] + 1;
 			}
 		arr.pop();
 		now = arr.front();
-		arr.push(now);
-		now.visit = 0;
 	}
 
-	cout << arr.front().count << '\n';
+	cout << count[n - 1][m - 1];
 
-	for(int i = 0; i < n; i++)
-		delete[] maze[i];
-	delete[] maze;
 	return 0;
 }
