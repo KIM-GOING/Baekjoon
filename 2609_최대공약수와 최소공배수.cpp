@@ -1,3 +1,5 @@
+//유클리드 호제법으로 다시 풀어보기
+
 #include <iostream>
 #include <vector>
 using namespace std;
