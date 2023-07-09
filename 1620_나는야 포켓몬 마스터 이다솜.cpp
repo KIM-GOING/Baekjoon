@@ -4,28 +4,29 @@
 using namespace std;
 
 int n, m;
-map<string, int> dic;
+map<string, int> dic1;
+map<int, string> dic2;
 
 int main() {
+	ios_base::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+
 	cin >> n >> m;
 	for (int i = 0; i < n; i++) {
 		string name;
 		cin >> name;
-		dic.insert({ name, i + 1});
+		dic1.insert({ name, i + 1});
+		dic2.insert({ i + 1, name });
 	}
 	for (int i = 0; i < m; i++) {
 		string q;
 		cin >> q;
-		if (stoi(q) >= 0 && stoi(q) < 10) {
-			for (auto j = dic.begin(); j != dic.end(); j++) {
-				if (j->second == stoi(q)) {
-					cout << j->first << '\n';
-					break;
-				}
-			}
+		if ((int)q[0] - 48 >= 0 && (int)q[0] - 48 < 10) {
+			cout << dic2[stoi(q)] << '\n';
 		}
 		else {
-			cout << dic[q] << '\n';
+			cout << dic1[q] << '\n';
 		}
 	}
 
