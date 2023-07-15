@@ -1,39 +1,33 @@
-//미완성 코드
-
-#include <cstdio>
+#include <iostream>
 using namespace std;
 
+int t, n, m;
+
 int main() {
-	int test;
-	scanf_s("%d", &test);
+	ios_base::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
 
-	int* west = new int[test];
-	int* east = new int[test];
+	cin >> t;
 
-	for (int i = 0; i < test; i++) {
-		int n, m;
-		scanf_s("%d", &n);
-		scanf_s("%d", &m);
-		west[i] = n;
-		east[i] = m;
-	}
+	for (int u = 0; u < t; u++) {
+		long long top = 1, bottom = 1;
+		cin >> n >> m;
 
-	
-	for (int i = 0; i < test; i++) {
-		long long top = 1;
-		long long bottom = 1;
-		int n = west[i];
-		int m = east[i];
-
-		for (int j = n; j > 0; j--) {
-			top *= m - (n - j);
-			bottom *= j;
+		int temp = m;
+		for (int i = 0; i < n; i++) {
+			top *= temp;
+			bottom *= i + 1;
+			if (top % bottom == 0) {
+				top = top / bottom;
+				bottom = 1;
+			}
+			temp--;
 		}
-		printf("%d\n", top / bottom);
+
+		cout << top / bottom << '\n';
 	}
 
-	delete[] west;
-	delete[] east;
 
 	return 0;
 }
