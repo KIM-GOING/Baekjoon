@@ -27,7 +27,7 @@ int main() {
 		else
 			nums[1] = 1000000;
 		nums[2] = dp[i - 1] + 1;
-
+		
 		int min = nums[0];
 		for (int j = 1; j < 3; j++) {
 			if (min > nums[j])
