@@ -22,8 +22,7 @@ void all_clean(int x, int y, int dir) {
 	int dx[4] = { x + 1, x, x - 1, x };
 	int dy[4] = { y, y - 1, y, y + 1 };
 
-	if (ddir[dir] < 0 || ddir[dir] >= n || ddir[dir] >= m ||
-		arr[dx[dir]][dy[dir]] == 1) {
+	if (arr[dx[dir]][dy[dir]] == 1) {
 		finish = 1;
 		return;
 	}
@@ -48,13 +47,6 @@ void search(int x, int y, int dir) {
 			i = u - 4;
 		else
 			i = u;
-		
-		if (i % 2 == 0)
-			if (ddir[i] < 0 || ddir[i] >= n)	continue;
-			else {}
-		else
-			if (ddir[i] < 0 || ddir[i] >= m)	continue;
-			else {}
 
 		if (arr[dx[i]][dy[i]] == 0) {
 			clean(dx[i], dy[i]);
